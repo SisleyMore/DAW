@@ -1,0 +1,46 @@
+<p-menubar
+  [model]="items"
+  styleClass="px-8 bg-white/75 backdrop-blur-[8px]"
+  autoDisplay="false"
+  class="fixed top-0 left-0 w-full z-10"
+>
+  <ng-template pTemplate="start">
+    <div>
+      <img src="./assets/images/logo.png" alt="" class="h-16 object-cover">
+    </div>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <ul class="flex gap-2 items-center">
+      <li>
+        <p-button
+          icon="pi pi-shopping-cart"
+          [text]="true"
+          badge="8"
+          badgeClass="p-badge-danger"
+        >
+          <span class="sr-only">Carrito de compras</span>
+        </p-button>
+      </li>
+      <li class="relative">
+        <p-button
+          [text]="true"
+          icon="pi pi-user"
+          pStyleClass="@next"
+          type="button"
+          enterFromClass="hidden"
+          enterActiveClass="animate-scalein"
+          leaveToClass="hidden"
+          leaveActiveClass="animate-fadeout"
+          hideOnEscape="true"
+          hideOnOutsideClick="true"
+        >
+          <span class="sr-only">Menú de usuario</span>
+        </p-button>
+        <p-menu
+          [model]="userOptions"
+          class="hidden absolute origin-top right-0 top-8 mt-1"
+        />
+      </li>
+    </ul>
+  </ng-template>
+</p-menubar>

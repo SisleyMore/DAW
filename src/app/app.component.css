@@ -1,0 +1,4 @@
+::ng-deep body {
+  font-family: "Poppins", "Inter", system-ui;
+  --font-family: "Poppins", "Inter", system-ui;
+}

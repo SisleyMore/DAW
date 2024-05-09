@@ -1,0 +1,29 @@
+:host ::ng-deep .p-carousel-indicators {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  opacity: 0.8;
+}
+
+:host ::ng-deep .p-carousel-content {
+  position: relative;
+}
+
+:host ::ng-deep .p-carousel-next {
+  position: absolute;
+  right: 0;
+  @apply bg-white/15 hover:bg-white/50 text-gray-700;
+}
+
+:host ::ng-deep .p-carousel-prev {
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  @apply bg-white/15 hover:bg-white/50 text-gray-700;
+}
+
+.custom-grid {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
+}

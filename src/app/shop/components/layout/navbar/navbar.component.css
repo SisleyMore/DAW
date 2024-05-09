@@ -1,0 +1,13 @@
+:host ::ng-deep p-menubarsub,
+:host ::ng-deep .p-menubar-button {
+  @apply ml-auto;
+}
+
+:host ::ng-deep .p-menubar-end {
+  @apply ml-0 primeng-md:ml-auto;
+}
+
+:host ::ng-deep .p-menuitem-icon,
+:host ::ng-deep .p-button-icon {
+  color: var(--primary-color);
+}
