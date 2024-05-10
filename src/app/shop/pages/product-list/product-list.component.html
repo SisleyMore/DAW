@@ -1,0 +1,40 @@
+<section class="space-y-8 w-[min(calc(100%-2rem),72rem)] mx-auto">
+  <p-dataView
+    #dv
+    [value]="products"
+    layout="grid"
+    [sortField]="sortField"
+    [sortOrder]="sortOrder"
+    filterBy="nombre"
+  >
+    <ng-template pTemplate="header">
+      <div class="flex flex-column md:flex-row gap-4 md:justify-between">
+        <p-iconField iconPosition="right">
+          <p-inputIcon
+            styleClass="pi pi-search"
+          />
+          <input
+            type="search"
+            pInputText
+            placeholder="Buscar producto"
+            (input)="dv.filter($any($event.target).value)"
+          />
+        </p-iconField>
+        <p-dropdown
+          [options]="sortOptions"
+          [(ngModel)]="sortField"
+          placeholder="Ordenar por precio"
+          (onChange)="onSortChange($event)"
+          styleClass="mb-4 md:mb-0"
+        />
+      </div>
+    </ng-template>
+    <ng-template let-product pTemplate="grid" let-products>
+      <div class="custom-grid">
+        @for (product of products; track product.codPro) {
+          <app-product-card [product]="product"/>
+        }
+      </div>
+    </ng-template>
+  </p-dataView>
+</section>
