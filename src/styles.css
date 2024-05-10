@@ -1,6 +1,6 @@
 @layer tailwind-base, primeng, primevue, tailwind-utilities;
 
-@import "primeng/resources/themes/lara-light-pink/theme.css";
+@import "primeng/resources/themes/aura-light-pink/theme.css";
 @import "primeng/resources/primeng.min.css";
 @import "primeicons/primeicons.css";
 
@@ -95,4 +95,10 @@
 
 ::ng-deep body {
   font-family: "Poppins", system-ui;
+}
+
+.custom-grid {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
 }

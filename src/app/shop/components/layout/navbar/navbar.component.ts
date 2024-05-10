@@ -33,7 +33,8 @@ export class NavbarComponent {
     },
     {
       label: 'Productos',
-      icon: 'pi pi-star'
+      icon: 'pi pi-star',
+      routerLink: './products'
     },
     {
       label: 'Servicios',

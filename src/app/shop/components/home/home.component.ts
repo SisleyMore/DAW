@@ -14,7 +14,6 @@ import {DividerModule} from "primeng/divider";
 })
 export class HomeComponent {
   // array of repeated numbers:
-  items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   protected readonly carouselImages=  [
     {
