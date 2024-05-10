@@ -1,17 +1,23 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import {MenuModule} from "primeng/menu";
-import {MenubarModule} from "primeng/menubar";
-import {ButtonModule} from "primeng/button";
-import {StyleClassModule} from "primeng/styleclass";
-import {MenuItem} from "primeng/api";
+import type { MenuItem } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { MenuModule } from 'primeng/menu';
+import { MenubarModule } from 'primeng/menubar';
+import { StyleClassModule } from 'primeng/styleclass';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, MenuModule, MenubarModule, ButtonModule, StyleClassModule],
+  imports: [
+    RouterLink,
+    MenuModule,
+    MenubarModule,
+    ButtonModule,
+    StyleClassModule,
+  ],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
   protected readonly userOptions = [
@@ -23,7 +29,7 @@ export class NavbarComponent {
       label: 'Cerrar sesión',
       icon: 'pi pi-fw pi-power-off',
     },
-  ]
+  ];
 
   protected readonly items: MenuItem[] = [
     {
@@ -34,7 +40,7 @@ export class NavbarComponent {
     {
       label: 'Productos',
       icon: 'pi pi-star',
-      routerLink: './products'
+      routerLink: './products',
     },
     {
       label: 'Servicios',
@@ -42,15 +48,15 @@ export class NavbarComponent {
       items: [
         {
           label: 'Manicure',
-          icon: 'pi pi-bolt'
+          icon: 'pi pi-bolt',
         },
         {
           label: 'Blocks',
-          icon: 'pi pi-server'
+          icon: 'pi pi-server',
         },
         {
           label: 'UI Kit',
-          icon: 'pi pi-pencil'
+          icon: 'pi pi-pencil',
         },
         {
           label: 'Templates',
@@ -58,20 +64,20 @@ export class NavbarComponent {
           items: [
             {
               label: 'Apollo',
-              icon: 'pi pi-palette'
+              icon: 'pi pi-palette',
             },
             {
               label: 'Ultima',
-              icon: 'pi pi-palette'
-            }
-          ]
-        }
-      ]
+              icon: 'pi pi-palette',
+            },
+          ],
+        },
+      ],
     },
     {
       label: 'Quiénes somos',
       icon: 'pi pi-envelope',
-      routerLink: './about'
-    }
-  ]
+      routerLink: './about',
+    },
+  ];
 }
