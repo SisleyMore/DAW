@@ -1,12 +1,14 @@
 import {Component, input} from '@angular/core';
 import {Product} from "../../../models/product.interface";
 import {CurrencyPipe} from "@angular/common";
+import {ButtonModule} from "primeng/button";
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
   imports: [
-    CurrencyPipe
+    CurrencyPipe,
+    ButtonModule
   ],
   templateUrl: './product-card.component.html',
   styles: ``

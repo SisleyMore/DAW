@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import {DividerModule} from "primeng/divider";
-import {productsTemp} from "../../../data/products-temp";
-import {Product} from "../../../models/product.interface";
-import {ProductCardComponent} from "../../components/product-card/product-card.component";
-import {DataViewModule} from "primeng/dataview";
-import {DropdownModule} from "primeng/dropdown";
-import {SelectItem} from "primeng/api";
-import {FormsModule} from "@angular/forms";
-import {IconFieldModule} from "primeng/iconfield";
-import {InputIconModule} from "primeng/inputicon";
-import {InputTextModule} from "primeng/inputtext";
+import { FormsModule } from '@angular/forms';
+import type { SelectItem } from 'primeng/api';
+import { DataViewModule } from 'primeng/dataview';
+import { DividerModule } from 'primeng/divider';
+import { DropdownModule } from 'primeng/dropdown';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { productsTemp } from '../../../data/products-temp';
+import type { Product } from '../../../models/product.interface';
+import { ProductCardComponent } from '../../components/product-card/product-card.component';
 
 @Component({
   selector: 'app-product-list',
@@ -22,11 +22,14 @@ import {InputTextModule} from "primeng/inputtext";
     FormsModule,
     IconFieldModule,
     InputIconModule,
-    InputTextModule
+    InputTextModule,
   ],
   templateUrl: './product-list.component.html',
   styles: `
-  `
+    :host ::ng-deep .p-dataview-header {
+      padding-inline: 0 !important;
+    }
+  `,
 })
 export class ProductListComponent {
   items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -38,12 +41,12 @@ export class ProductListComponent {
   ngOnInit(): void {
     this.sortOptions = [
       { label: 'Del más caro al más barato', value: '!precio' },
-      { label: 'Del más barato al más caro', value: 'precio' }
+      { label: 'Del más barato al más caro', value: 'precio' },
     ];
   }
 
   onSortChange(event: any) {
-    let value = event.value;
+    const value = event.value;
 
     if (value.indexOf('!') === 0) {
       this.sortOrder = -1;
