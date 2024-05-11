@@ -1,61 +1,60 @@
 <div class="flex flex-col items-center justify-center max-w-lg mx-auto">
-    <h3 class="text-center font-bold text-2xl my-6">Reserva tu cita aquí ~</h3>
-    <form #ServicioForm="ngForm" (ngSubmit)="agregar()" class="">
-        <div class="form-group">
-            <label class="font-bold text-1xl">Servicio</label>
-            <p-dropdown 
-            class="p-5"
-            formControlName="selectedServices" 
-            [options]="services"
-            optionLabel="name"
-            placeholder="Selecciona un servicio" />
+  <h3 class="text-center font-bold text-2xl my-6">Reserva tu cita aquí ~</h3>
+  <form #ServicioForm="ngForm" (ngSubmit)="agregar()" class="">
+    <div class="form-group">
+      <label class="font-bold text-1xl">Servicio</label>
+      <p-dropdown
+        class="p-5"
+        [options]="services"
+        optionLabel="name"
+        placeholder="Selecciona un servicio"/>
+    </div>
+    <div class="form-group">
+      <label class="font-bold text-1xl">Nombre</label>
+      <input type="text" pInputText [(ngModel)]="model.nombrePersona"/>
+    </div>
+    <div class="form-group">
+      <label class="font-bold text-1xl">Celular</label>
+      <input type="text" pInputText [(ngModel)]="model.numero"/>
+    </div>
+    <div class="form-group">
+      <label class="font-bold text-1xl">Correo</label>
+      <input type="text" pInputText [(ngModel)]="model.email"/>
+    </div>
+    <div class="form-group">
+      <label class="font-bold text-1xl">Resumen del caso</label>
+      <input type="text" pInputText [(ngModel)]="model.descripcion"/>
+    </div>
+    <div class="form-group">
+      <label class="font-bold text-1xl">Fecha</label>
+      <input type="text" pInputText [(ngModel)]="model.fecha_cita"/>
+
+      <label class="font-bold text-1xl">Hora</label>
+      <input type="text" pInputText [(ngModel)]="model.hora_cita"/>
+    </div>
+    <div class="form-group">
+      <label class="font-bold text-1xl">Lugar</label>
+      <input type="text" pInputText [(ngModel)]="model.lugar"/>
+      <div class="flex flex-wrap gap-3">
+        <div class="flex align-items-center">
+          <p-radioButton
+            name="local"
+            value="1"
+
+            inputId="lugar"/>
+          <label for="lugar" class="ml-2">
+            Tienda
+          </label>
+          <p-radioButton
+            name="domicilio"
+            value="2"
+
+            inputId="lugar"/>
+          <label for="lugar" class="ml-2">
+            Domicilio + S/10
+          </label>
         </div>
-        <div class="form-group">
-            <label class="font-bold text-1xl">Nombre</label>
-            <input type="text" pInputText [(ngModel)]="model.nombrePersona" />
-        </div>
-        <div class="form-group">
-            <label class="font-bold text-1xl">Celular</label>
-            <input type="text" pInputText [(ngModel)]="model.numero" />
-        </div>
-        <div class="form-group">
-            <label class="font-bold text-1xl">Correo</label>
-            <input type="text" pInputText [(ngModel)]="model.email" />
-        </div>
-        <div class="form-group">
-            <label class="font-bold text-1xl">Resumen del caso</label>
-            <input type="text" pInputText [(ngModel)]="model.descripcion" />
-        </div>
-        <div class="form-group">
-            <label class="font-bold text-1xl">Fecha</label>
-            <input type="text" pInputText [(ngModel)]="model.fecha_cita" />
-        
-            <label class="font-bold text-1xl">Hora</label>
-            <input type="text" pInputText [(ngModel)]="model.hora_cita" />
-        </div>
-        <div class="form-group">
-            <label class="font-bold text-1xl">Lugar</label>
-            <input type="text" pInputText [(ngModel)]="model.lugar" />
-            <div class="flex flex-wrap gap-3">
-                <div class="flex align-items-center">
-                    <p-radioButton 
-                        name="local" 
-                        value="1" 
-                        
-                        inputId="lugar" />
-                    <label for="lugar" class="ml-2">
-                        Tienda 
-                    </label>
-                    <p-radioButton 
-                        name="domicilio" 
-                        value="2" 
-                        
-                        inputId="lugar" />
-                    <label for="lugar" class="ml-2">
-                        Domicilio  + S/10
-                    </label>
-                </div>
-            </div>
-        </div>
-    </form>
+      </div>
+    </div>
+  </form>
 </div>

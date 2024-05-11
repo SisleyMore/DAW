@@ -1,12 +1,17 @@
-import { Component, OnInit, model } from '@angular/core';
-import { FormGroup, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import { Component, type OnInit, model } from '@angular/core';
+import {
+  FormGroup,
+  FormsModule,
+  NgForm,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { FormControl } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
-import { ServicesService } from '../../../../service/services.service';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { ClassService } from '../../../../models/serviceClass';
+import { ServicesService } from '../../../../service/services.service';
 
 @Component({
   selector: 'app-mackeup',
@@ -17,20 +22,18 @@ import { ClassService } from '../../../../models/serviceClass';
     FloatLabelModule,
     RadioButtonModule,
     InputTextModule,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './mackeup.component.html',
-  styleUrl: './mackeup.component.css'
+  styleUrl: './mackeup.component.css',
 })
-export class MackeupComponent implements OnInit{
-  constructor(private service: ServicesService) { };
-  mensaje: String = "";
+export class MackeupComponent implements OnInit {
+  constructor(private service: ServicesService) {}
+  mensaje = '';
   model = new ClassService();
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
-  selectedServices: FormControl = new FormControl(); 
+  selectedServices: FormControl = new FormControl();
   services = [
     { name: 'Manicura', value: 1 },
     { name: 'Maquillaje', value: 2 },
@@ -38,6 +41,6 @@ export class MackeupComponent implements OnInit{
   ];
 
   agregar = () => {
-    this.mensaje="AGREGANDO";
-  }
+    this.mensaje = 'AGREGANDO';
+  };
 }
