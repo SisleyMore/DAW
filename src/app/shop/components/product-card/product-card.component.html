@@ -15,6 +15,7 @@
       <span class="font-bold text-lg">{{ product().precio | currency }}</span>
       <p-button
         icon="pi pi-shopping-cart"
+        (onClick)="addToCart()"
       />
     </div>
   </div>
