@@ -25,11 +25,7 @@ import { ProductCardComponent } from '../../components/product-card/product-card
     InputTextModule,
   ],
   templateUrl: './product-list.component.html',
-  styles: `
-    :host ::ng-deep .p-dataview-header {
-      padding-inline: 0 !important;
-    }
-  `,
+  styleUrl: './product-list.component.css',
 })
 export class ProductListComponent {
   items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];

@@ -1,0 +1,7 @@
+:host .list-controls .p-inputtext {
+  @apply w-full !important;
+}
+
+:host ::ng-deep .p-dataview-header {
+  padding-inline: 0 !important;
+}

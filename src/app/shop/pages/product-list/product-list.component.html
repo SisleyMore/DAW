@@ -6,9 +6,10 @@
     [sortField]="sortField"
     [sortOrder]="sortOrder"
     filterBy="nombre"
+    class="dataview"
   >
     <ng-template pTemplate="header">
-      <div class="flex flex-column md:flex-row gap-4 md:justify-between">
+      <div class="list-controls | grid grid-cols-1 sm:grid-cols-2 gap-4 justify-between">
         <p-iconField iconPosition="right">
           <p-inputIcon
             styleClass="pi pi-search"
@@ -21,11 +22,12 @@
           />
         </p-iconField>
         <p-dropdown
+          class="sm:justify-self-end"
           [options]="sortOptions"
           [(ngModel)]="sortField"
           placeholder="Ordenar por precio"
           (onChange)="onSortChange($event)"
-          styleClass="mb-4 md:mb-0"
+          styleClass="mb-4 md:mb-0 flex-1"
         />
       </div>
     </ng-template>

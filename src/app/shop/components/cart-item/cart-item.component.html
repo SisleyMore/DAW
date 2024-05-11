@@ -1,4 +1,4 @@
-<div class="flex flex-wrap p-2 items-center gap-3">
+<div class="flex flex-wrap p-2 gap-3">
   <img
     class="w-24 shadow-sm shrink-0 rounded"
     [src]="cartItem().product.imagen"
@@ -9,8 +9,8 @@
     <div class="flex items-center gap-2">
       <i class="pi pi-tag text-sm"></i>
       <span>
-            {{ cartItem().product.categoria }}
-          </span>
+        {{ cartItem().product.categoria }}
+      </span>
     </div>
     <p-inputNumber
       [ngModel]="cartItem().quantity"
@@ -25,7 +25,16 @@
       [max]="100"
     />
   </div>
-  <span class="font-bold text-900">
-        {{ (cartItem().product.precio * cartItem().quantity) | currency }}
-      </span>
+  <div class="flex flex-col justify-between">
+    <span class="font-bold text-900">
+      {{ (cartItem().product.precio * cartItem().quantity) | currency }}
+    </span>
+    <p-button
+      icon="pi pi-trash"
+      (onClick)="onRemoveItemFromCart()"
+      [text]="true"
+      severity="danger"
+      class="p-button-rounded p-button-danger"
+    />
+  </div>
 </div>

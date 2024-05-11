@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       screens: {
         'primeng-md': '960px',
+        sm: '520px',
       },
       keyframes: {
         scalein: {
@@ -35,4 +36,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};
