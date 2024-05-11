@@ -1,93 +1,162 @@
-<div class="flex flex-col items-center justify-center max-w-xlg mx-auto">
-    <h3 class="text-center font-bold text-2xl my-6">Reserva tu cita aquí ~</h3>
-    <form #ServicioForm="ngForm" (ngSubmit)="agregar()" class="flex flex-wrap">
-        <div class="flex flex-col w-1/2">
-            <h3 class="text-center font-bold text-2xl my-6">Datos personales</h3>
-            <div class="form-group flex flex-col w-1/2">
-                <label class="font-bold text-1xl">Servicio</label>
-                <p-dropdown 
-                class="p-5"
-                formControlName="selectedServices" 
-                [options]="services"
-                [(ngModel)]="model.nombreServicio"
-                optionLabel="name"
-                placeholder="Selecciona un servicio" />
-            </div>
-            <div class="form-group flex flex-col w-1/2">
-                <label class="font-bold text-1xl">Nombre</label>
-                <input type="text" id="nombrePersona" name="nombrePersona" pInputText [(ngModel)]="model.nombrePersona" />
-            </div>
-            <div class="form-group flex flex-col w-1/2">
-                <label class="font-bold text-1xl">Celular</label>
-                <input type="text" id="numero" name="numero" pInputText [(ngModel)]="model.numero" />
-            </div>
-            <div class="form-group">
-                <label class="font-bold text-1xl">Correo</label>
-                <input type="text" id="email" name="email" pInputText [(ngModel)]="model.email" />
-            </div>
-            <div class="form-group">
-                <label class="font-bold text-1xl">Resumen del caso</label>
-                <textarea id="descripcion" name="descripcion"  pInputText [(ngModel)]="model.descripcion"></textarea>
-            </div>
-        </div>
-        <div class="flex flex-col w-1/2">
-            <h3 class="text-center font-bold text-2xl my-6">Datos de la cita</h3>
+<div class="grid pb-8">
+  <h2 class="text-center font-semibold text-2xl my-6 text-[var(--primary-color)]">Reserva tu cita aquí ~</h2>
+  <form
+    [formGroup]="appointmentForm"
+    class="grid w-[min(calc(100%-2rem),52rem)] mx-auto space-y-4"
+    (ngSubmit)="agregar()"
+  >
+    <p-fieldset legend="Tipo de servicio">
+      <div class="form-group | grid">
+        <label class="font-semibold">Servicio</label>
+        <p-dropdown
+          [options]="services"
+          optionLabel="name"
+          placeholder="Selecciona un servicio"
+          styleClass="min-w-full"
+        />
+      </div>
+    </p-fieldset>
+    <div class="grid gap-2 grid-cols-1 md:grid-cols-2">
+      <p-fieldset
+        legend="Datos personales"
+        formGroupName="personalInformation"
+      >
+        <div class="grid gap-2">
+          <div class="form-group | grid">
+            <label class="font-semibold" for="firstName">Nombre</label>
+            <input
+              type="text"
+              formControlName="firstName"
+              id="firstName"
+              name="firstName"
+              pInputText
+            />
+          </div>
+          <div class="form-group | grid">
+            <label class="font-bold" for="phone">Celular</label>
+            <input
+              type="text"
+              formControlName="phone"
+              id="phone"
+              name="phone"
+              pInputText
+            />
+          </div>
+          <div class="form-group | grid">
+            <label class="font-bold">Correo</label>
+            <input
+              type="text"
+              formControlName="email"
+              id="email"
+              name="email"
+              pInputText
+            />
+          </div>
+          <div class="form-group | grid">
+            <label class="font-bold">Resumen del caso</label>
+            <textarea
+              id="descripcion"
+              formControlName="description"
+              name="descripcion"
+              pInputText
+            ></textarea>
+          </div>
+        </div>      </p-fieldset>
+      <p-fieldset class="grid" legend="Datos de la cita">
+        <div formGroupName="appointmentInformation">
+          <div class="form-group | grid">
+            <label class="font-semibold" for="appointmentDate">Fecha</label>
+            <p-calendar
+              type="date"
+              formControlName="appointmentDate"
+              id="appointmentDate"
+              name="appointmentDate"
+            />
+          </div>
+          <div class="form-group | grid">
+            <label class="font-semibold text-1xl">Hora</label>
+            <input
+              type="text"
+              id="hora_cita"
+              name="hora_cita"
+              pInputText
+            />
+          </div>
+          <div class="form-group">
+            <label class="font-bold text-1xl">Lugar</label>
 
+            <div class="flex flex-wrap gap-3">
+              <div class="flex align-items-center">
+                <input
+                  type="radio"
+                  name="lugar"
+                  value="1"
+                  inputId="Tienda"
+                  (change)="toggleInputs($event)"
+                />
+                <label for="Tienda" class="ml-2">
+                  Tienda
+                </label>
+                <input
+                  type="radio"
+                  name="lugar"
+                  value="2"
+                  inputId="Domicilio"
+                  (change)="toggleInputs($event)"
+                />
+                <label for="Domicilio" class="ml-2">
+                  Domicilio + S/10
+                </label>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="selectedOption === '1'">
             <div class="form-group">
-                <label class="font-bold text-1xl">Fecha</label>
-                <input type="Date" id="fecha_cita" name="fecha_cita" pInputText [(ngModel)]="model.fecha_cita" />
+              <label class="font-bold text-1xl">Dirección</label>
+              <input
+                type="text"
+                name="direccion"
+                disabled="disabled"
+                placeholder="Av. Piramedes 134"
+                pInputText
+              >
             </div>
             <div class="form-group">
-                <label class="font-bold text-1xl">Hora</label>
-                <input type="text" id="hora_cita" name="hora_cita" pInputText [(ngModel)]="model.hora_cita" />
+              <label class="font-bold text-1xl">Referencia</label>
+              <input
+                type="text"
+                name="referencia"
+                disabled="disabled"
+                pInputText
+                placeholder="Frente al restaurant el sol"
+              >
             </div>
-            <div class="form-group">
-                <label class="font-bold text-1xl">Lugar</label>
-            
-                <div class="flex flex-wrap gap-3">
-                    <div class="flex align-items-center">
-                        <input
-                            type="radio"
-                            name="lugar" 
-                            value="1" 
-                            inputId="Tienda"
-                            (change)="toggleInputs($event)" />
-                        <label for="Tienda" class="ml-2">
-                            Tienda 
-                        </label>
-                        <input 
-                            type="radio" 
-                            name="lugar" 
-                            value="2"
-                            inputId="Domicilio"
-                            (change)="toggleInputs($event)"/>
-                        <label for="Domicilio" class="ml-2">
-                            Domicilio  + S/10
-                        </label>
-                    </div>
-                </div>
+          </div>
+          <div *ngIf="selectedOption === '2'">
+            <div class="form-group | grid">
+              <label class="font-semibold">Dirección</label>
+              <input
+                type="text"
+                name="direccion"
+                pInputText
+              >
             </div>
-            <div *ngIf="selectedOption === '1'">
-                <div class="form-group">
-                    <label class="font-bold text-1xl">Dirección</label>
-                    <input type="text" name="direccion" disabled="disabled" placeholder="Av. Piramedes 134" pInputText [(ngModel)]="model.direccion">  
-                </div>          
-                <div class="form-group">
-                    <label class="font-bold text-1xl">Referencia</label>
-                    <input type="text" name="referencia" disabled="disabled"  pInputText placeholder="Frente al restaurant el sol" [(ngModel)]="model.referencia">
-                </div>             
+            <div class="form-group | grid">
+              <label class="font-semibold">Referencia</label>
+              <input
+                type="text"
+                name="referencia"
+                pInputText
+              >
             </div>
-            <div *ngIf="selectedOption === '2'">
-                <div class="form-group">
-                    <label class="font-bold text-1xl">Dirección</label>
-                    <input type="text" name="direccion" pInputText [(ngModel)]="model.direccion">  
-                </div>          
-                <div class="form-group">
-                    <label class="font-bold text-1xl">Referencia</label>
-                    <input type="text" name="referencia" pInputText [(ngModel)]="model.referencia">
-                </div>
-            </div>
+          </div>
         </div>
-        <p-button label="Enviar" class="mt-4" type="submit"/>
-    </form>
+      </p-fieldset>
+    </div>
+    <p-button
+      label="Enviar"
+      type="submit"
+      styleClass="w-full"
+    />
+  </form>
 </div>
