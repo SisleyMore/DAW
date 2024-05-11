@@ -1,5 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { ShoppingCartStore } from '../../+store/shopping-cart.store';
 import type { Product } from '../../../models/product.interface';
@@ -7,7 +8,7 @@ import type { Product } from '../../../models/product.interface';
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [CurrencyPipe, ButtonModule],
+  imports: [CurrencyPipe, ButtonModule, RouterLink],
   templateUrl: './product-card.component.html',
 })
 export class ProductCardComponent {

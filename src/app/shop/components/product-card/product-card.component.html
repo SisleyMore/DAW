@@ -1,12 +1,13 @@
 <div class="card | rounded-md border ">
-  <div class="mx-auto rounded-t-md overflow-hidden shadow-md">
-    <img
-      class="w-full object-cover aspect-[3/4]"
-      [src]="product().imagen"
-      [alt]="product().nombre"
-    >
-  </div>
-  <div class="p-4 space-y-[1em]">
+  <a [routerLink]="['/app/product', 1]">
+    <div class="mx-auto rounded-t-md overflow-hidden shadow-md">
+      <img
+        class="w-full object-cover aspect-[3/4]"
+        [src]="product().imagen"
+        [alt]="product().nombre"
+      >
+    </div>
+  </a>  <div class="p-4 space-y-[1em]">
     <h3 class="text-lg font-medium">{{ product().nombre }}</h3>
     <p class="text-sm text-gray-600">
       {{ product().descripcion }}
