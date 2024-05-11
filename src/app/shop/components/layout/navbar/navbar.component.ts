@@ -26,7 +26,7 @@ import { CartSidebarComponent } from '../../cart-sidebar/cart-sidebar.component'
 })
 export class NavbarComponent {
   private readonly cartStore = inject(ShoppingCartStore);
-  public cartCount = this.cartStore.cartCount;
+  public cartCount = this.cartStore.cartCount; /*this.cartStore.cartCount;*/
   public sidebarVisible = signal(false);
 
   protected readonly userOptions = [
@@ -58,31 +58,24 @@ export class NavbarComponent {
         {
           label: 'Manicure',
           icon: 'pi pi-bolt',
+          routerLink: './manicure'
         },
         {
-          label: 'Blocks',
+          label: 'Asesoramiento',
           icon: 'pi pi-server',
+          routerLink: './advices'        
         },
         {
-          label: 'UI Kit',
+          label: 'Mackeup',
           icon: 'pi pi-pencil',
-        },
-        {
-          label: 'Templates',
-          icon: 'pi pi-palette',
-          items: [
-            {
-              label: 'Apollo',
-              icon: 'pi pi-palette',
-            },
-            {
-              label: 'Ultima',
-              icon: 'pi pi-palette',
-            },
-          ],
-        },
+          routerLink: './mackeup'
+        }
       ],
     },
+    {
+      routerLink: './form-service'
+    },
+    
     {
       label: 'Quiénes somos',
       icon: 'pi pi-envelope',
