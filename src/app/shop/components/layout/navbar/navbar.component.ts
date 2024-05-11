@@ -58,24 +58,20 @@ export class NavbarComponent {
         {
           label: 'Manicure',
           icon: 'pi pi-bolt',
-          routerLink: './manicure'
+          routerLink: './manicure',
         },
         {
           label: 'Asesoramiento',
           icon: 'pi pi-server',
-          routerLink: './advices'        
+          routerLink: './advices',
         },
         {
           label: 'Mackeup',
           icon: 'pi pi-pencil',
-          routerLink: './mackeup'
-        }
+          routerLink: './mackeup',
+        },
       ],
     },
-    {
-      routerLink: './form-service'
-    },
-    
     {
       label: 'Quiénes somos',
       icon: 'pi pi-envelope',

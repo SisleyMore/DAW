@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { ProductsComponent } from './shop/components/products/products.component';
 
 // export const routes: Routes = [
 //     {path:"", component: HomeComponent},
@@ -8,10 +9,14 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: 'app',
-    loadChildren: () => import('./shop/shop.routes').then(m => m.SHOP_ROUTES),
+    loadChildren: () => import('./shop/shop.routes').then((m) => m.SHOP_ROUTES),
+  },
+  {
+    path: 'admin',
+    component: ProductsComponent,
   },
   {
     path: '**',
-    redirectTo: 'app'
-  }
+    redirectTo: 'app',
+  },
 ];
