@@ -7,28 +7,7 @@
     <h3 class="font-semibold text-lg text-[var(--primary-color)]">Carrito de compras</h3>
   </ng-template>
   @for (cartItem of cartItems(); track cartItem) {
-    <div class="flex flex-wrap p-2 items-center gap-3">
-      <img
-        class="w-24 shadow-sm shrink-0 rounded"
-        [src]="cartItem.product.imagen"
-        [alt]="cartItem.product.nombre"
-      />
-      <div class="flex-1 flex flex-col gap-2 text-sm">
-        <span class="font-bold text-base">{{ cartItem.product.nombre }}</span>
-        <div class="flex items-center gap-2">
-          <i class="pi pi-tag text-sm"></i>
-          <span>
-            {{ cartItem.product.categoria }}
-          </span>
-        </div>
-        <span>
-            Cantidad: <span class="font-bold">{{ cartItem.quantity }}</span>
-          </span>
-      </div>
-      <span class="font-bold text-900">
-        {{ (cartItem.product.precio * cartItem.quantity) | currency }}
-      </span>
-    </div>
+    <app-cart-item [cartItem]="cartItem" />
   }
   @if (cartItems().length === 0) {
     <div class="text-gray-600 text-sm">

@@ -1,0 +1,3 @@
+:host ::ng-deep .p-inputtext {
+  @apply w-10 text-center;
+}
