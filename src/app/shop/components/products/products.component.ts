@@ -1,19 +1,32 @@
-import { NgForOf } from '@angular/common';
+import { CurrencyPipe, NgForOf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { TableModule } from 'primeng/table';
+import { productsTemp } from '../../../data/products-temp';
+import { Product } from '../../../models/product.interface';
 import { Producto } from '../../../models/productClass';
 import { ProductService } from '../../../service/product.service';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [NgForOf, FormsModule, ButtonModule],
+  imports: [
+    NgForOf,
+    FormsModule,
+    ButtonModule,
+    CurrencyPipe,
+    TableModule,
+    InputTextModule,
+    InputTextareaModule,
+  ],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
-  productos: Producto[] = [];
+  productos: Product[] = [];
   mensaje = 'Modo inserción';
   insUpd = true; // TRUE - INSERTAR -- FALSE - ACTUALIZAR
   model = new Producto();
@@ -21,16 +34,17 @@ export class ProductsComponent implements OnInit {
   constructor(private servicio: ProductService) {}
 
   ngOnInit(): void {
-    this.getListado();
+    // this.getListado();
+    this.productos = productsTemp;
   }
 
   getListado() {
     this.servicio.getProductos().subscribe((resp: any) => {
-      this.productos = resp;
+      // this.productos = resp;
     });
   }
 
-  getProducto(i: Producto) {
+  getProducto(i: Product) {
     this.servicio.getProducto(i.codPro).subscribe((resp: any) => {
       this.mensaje = 'Modo actualización';
       this.model = resp;
@@ -38,7 +52,7 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  delProducto(i: Producto) {
+  delProducto(i: Product) {
     this.servicio.delProductoById(i.codPro).subscribe(() => {
       this.mensaje = 'Producto eliminado';
       this.getListado();
