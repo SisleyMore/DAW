@@ -7,7 +7,7 @@
   @apply ml-0 primeng-md:ml-auto;
 }
 
-:host ::ng-deep .p-menuitem-icon,
-:host ::ng-deep .p-button-icon {
+:host ::ng-deep .navbar .p-menuitem-icon,
+:host ::ng-deep .navbar .p-button-icon {
   color: var(--primary-color);
 }

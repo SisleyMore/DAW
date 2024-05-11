@@ -12,12 +12,10 @@ import type { Product } from '../../models/product.interface';
 
 type ShoppingCartState = {
   cartItems: CartItem[];
-  total: number;
 };
 
 const initialState: ShoppingCartState = {
   cartItems: [],
-  total: 0,
 };
 
 export const ShoppingCartStore = signalStore(
@@ -27,7 +25,7 @@ export const ShoppingCartStore = signalStore(
     cartCount: computed(() =>
       cartItems().reduce((acc, item) => acc + item.quantity, 0),
     ),
-    subTotal: computed(() =>
+    total: computed(() =>
       cartItems().reduce(
         (accTotal, item) => accTotal + item.product.precio * item.quantity,
         0,

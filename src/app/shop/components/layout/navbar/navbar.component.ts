@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import type { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
+import { SidebarModule } from 'primeng/sidebar';
 import { StyleClassModule } from 'primeng/styleclass';
+import { ShoppingCartStore } from '../../../+store/shopping-cart.store';
+import { CartSidebarComponent } from '../../cart-sidebar/cart-sidebar.component';
 
 @Component({
   selector: 'app-navbar',
@@ -15,11 +18,17 @@ import { StyleClassModule } from 'primeng/styleclass';
     MenubarModule,
     ButtonModule,
     StyleClassModule,
+    SidebarModule,
+    CartSidebarComponent,
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
+  private readonly cartStore = inject(ShoppingCartStore);
+  public cartCount = this.cartStore.cartCount;
+  public sidebarVisible = signal(false);
+
   protected readonly userOptions = [
     {
       label: 'Iniciar Sesión',
