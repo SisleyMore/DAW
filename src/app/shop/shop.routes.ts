@@ -7,6 +7,7 @@ import {ProductListComponent} from "./pages/product-list/product-list.component"
 import { ManicureComponent } from "./components/services/manicure/manicure.component";
 import { FormServiceComponent } from "./components/services/form-service/form-service.component";
 import { MackeupComponent } from "./components/services/mackeup/mackeup.component";
+import { ProductsComponent } from "./components/products/products.component";
 
 export const SHOP_ROUTES: Routes = [
   {
@@ -40,6 +41,10 @@ export const SHOP_ROUTES: Routes = [
       {
         path: 'form-service',
         component: FormServiceComponent
+      },
+      {
+        path: 'add-product',
+        component: ProductsComponent
       },
       {
         path: '**',

@@ -1,0 +1,66 @@
+<div class="p-4">
+    <div class="card | rounded-md border">
+        <div class="row">
+            <div class="col-12">
+                <h3>Catálogo de productos</h3>
+                <select>            
+                    <option *ngFor="let i of productos" [value]="i.codPro">{{i.nombre}}</option>
+        
+                </select>
+                <hr />
+            </div>
+            <div class="col-12 col-md-6 p-2">
+                <form #ProductoForm="ngForm" (ngSubmit)="agregar(); ProductoForm.reset()">
+                    <input type="hidden" [(ngModel)]="model.codPro" name="id" />
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" [(ngModel)]="model.nombre" name="nombre"
+                        id="nombre" class="form-control">
+                    <label for="precio" class="form-label">Precio</label>
+                    <input type="number" [(ngModel)]="model.precio" name="precio"
+                        id="precio" class="form-control">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <textarea id="descripcion" [(ngModel)]="model.descripcion" name="descripcion"
+                        class="form-control"></textarea>
+                    <p-button type="submit" class="btn btn-dark my-3">Procesar</p-button>
+                </form>
+                <p class="alert alert-info">{{mensaje}}</p>
+            </div>
+            <div class="col-12 col-md-6 table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                            <th colspan="2">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let i of productos">
+                            <td>{{i.codPro}}</td>
+                            <td>{{i.nombre}}</td>
+                            <td>{{i.descripcion}}</td>
+                            <td>{{i.precio}}</td>
+                            <td><button type="button" class="btn btn-warning btn-sm" (click)="getProducto(i)">Editar</button></td>
+                            <td><button type="button" class="btn btn-danger btn-sm" (click)="delProducto(i)">Borrar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xl-3 col-md-4 col-sm-6 col-12 p-2" *ngFor="let p of productos">
+                <div class="card">
+                    <div class="card-header">
+                        {{p.nombre}}
+                    </div>
+                    <div class="card-body">
+                        {{p.descripcion}}
+                    </div>
+                    <div class="card-footer">
+                        Precio: S/{{p.precio}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
