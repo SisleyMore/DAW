@@ -12,6 +12,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ClassService } from '../../../../models/serviceClass';
 import { ServicesService } from '../../../../service/services.service';
+import { NgIf } from '@angular/common';
+import { Button, ButtonModule } from 'primeng/button';
+import { Router, RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-mackeup',
@@ -23,6 +27,9 @@ import { ServicesService } from '../../../../service/services.service';
     RadioButtonModule,
     InputTextModule,
     FormsModule,
+    NgIf, 
+    ButtonModule,
+    RouterModule
   ],
   templateUrl: './mackeup.component.html',
   styleUrl: './mackeup.component.css',
@@ -31,7 +38,14 @@ export class MackeupComponent implements OnInit {
   constructor(private service: ServicesService) {}
   mensaje = '';
   model = new ClassService();
+  selectedOption = ''; 
+  router = Router;
   ngOnInit(): void {}
+  
+  toggleInputs(event: any) {
+    this.selectedOption = event.target.value;
+
+  }
 
   selectedServices: FormControl = new FormControl();
   services = [
@@ -41,6 +55,9 @@ export class MackeupComponent implements OnInit {
   ];
 
   agregar = () => {
-    this.mensaje = 'AGREGANDO';
+    this.service.postService(this.model)
+    .subscribe(resp =>{
+      console.log("exito")
+    });
   };
 }
