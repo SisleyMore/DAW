@@ -1,10 +1,10 @@
 import { NgIf } from '@angular/common';
-import { Component, type OnInit, inject, model } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
   FormGroup,
   FormsModule,
-  NgForm,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -12,12 +12,12 @@ import { FormControl } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Button, ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
-import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
 import { FieldsetModule } from 'primeng/fieldset';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { filter } from 'rxjs';
 import { ClassService } from '../../../../models/serviceClass';
 import { ServicesService } from '../../../../service/services.service';
 
@@ -27,7 +27,6 @@ import { ServicesService } from '../../../../service/services.service';
   imports: [
     ReactiveFormsModule,
     DropdownModule,
-    FloatLabelModule,
     RadioButtonModule,
     InputTextModule,
     FormsModule,
@@ -35,8 +34,8 @@ import { ServicesService } from '../../../../service/services.service';
     ButtonModule,
     RouterModule,
     FieldsetModule,
-    DividerModule,
     CalendarModule,
+    InputTextareaModule,
   ],
   templateUrl: './mackeup.component.html',
   styleUrl: './mackeup.component.css',
@@ -47,10 +46,10 @@ export class MackeupComponent {
 
   mensaje = '';
   model = new ClassService();
-  selectedOption = '';
   router = Router;
+  selectedLocation = '1';
 
-  protected readonly appointmentForm: FormGroup = this.formBuilder.group({
+  protected readonly appointmentForm = this.formBuilder.group({
     personalInformation: this.formBuilder.group({
       firstName: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
@@ -60,14 +59,15 @@ export class MackeupComponent {
     appointmentInformation: this.formBuilder.group({
       appointmentDate: ['', Validators.required],
       time: ['', Validators.required],
-      location: ['', Validators.required],
+      location: ['1', Validators.required],
       address: [''],
       reference: [''],
     }),
   });
 
   toggleInputs(event: any) {
-    this.selectedOption = event.target.value;
+    this.selectedLocation = event.target.value;
+    console.log(this.selectedLocation);
   }
 
   selectedServices: FormControl = new FormControl();
