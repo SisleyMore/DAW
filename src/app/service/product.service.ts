@@ -1,36 +1,40 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Producto } from '../models/productClass';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
+import { Product } from '../models/product.interface';
+import { Producto } from '../models/productClass';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
-  url = "http://localhost:8080/producto";
+  url = 'http://localhost:8080/productos';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getProductos() {
-    return this.http.get<Producto[]>(this.url);
+  readonly #products$ = this.http.get<Product[]>(`${this.url}`);
+  readonly products = toSignal(this.#products$, {
+    initialValue: [] as Product[],
+  });
+
+  getProducts() {
+    return this.http.get<Product[]>(`${this.url}`);
   }
 
-  getProducto(id: any) {
+  getProducto(id: number) {
     return this.http.get<Producto>(`${this.url}/${id}`);
   }
 
-  insertProducto(data: Producto) {
-    return this.http.post<Producto>(this.url, data)
-      .pipe(map((emp) => data));
+  insertProducto(data: Product) {
+    return this.http.post<Producto>(this.url, data);
   }
 
-  updateProducto(data: Producto) {
-    return this.http.put<Producto>(this.url, data)
-      .pipe(map((emp) => data));
+  updateProducto(data: Product) {
+    return this.http.put<Producto>(`${this.url}`, data);
   }
 
-  delProductoById(id: any) {
-    return this.http.delete<Producto[]>(`${this.url}/${id}`);
+  delProductoById(id: number) {
+    return this.http.delete<Product>(`${this.url}/${id}`);
   }
-
 }

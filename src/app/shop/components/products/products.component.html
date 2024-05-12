@@ -1,90 +1,247 @@
-<div class="p-4">
-  <div class="card">
-    <div class="row">
-      <div class="col-12">
-        <h3>Catálogo de productos</h3>
-        <select>
-          <option *ngFor="let i of productos" [value]="i.codPro">{{ i.nombre }}</option>
-        </select>
-        <hr/>
-      </div>
-      <div class="col-12 col-md-6 p-2">
-        <form #ProductoForm="ngForm" (ngSubmit)="agregar(); ProductoForm.reset()" class="grid gap-4 max-w-xl">
-          <div class="grid gap-2">
-            <input type="hidden" [(ngModel)]="model.codPro" name="id"/>
-            <label for="nombre" class="form-label">Nombre</label>
-          </div>
-          <div class="grid gap-2">
-            <input
-              type="text"
-              [(ngModel)]="model.nombre"
-              name="nombre"
-              id="nombre" class="form-control"
-              pInputText
-            >
-            <label for="precio" class="form-label">Precio</label>
-          </div>
-          <div class="grid gap-2">
-            <input
-              type="number"
-              [(ngModel)]="model.precio"
-              name="precio"
-              id="precio" class="form-control"
-              pInputText
-            >
-            <label for="descripcion" class="form-label">Descripción</label>
-          </div>
-          <textarea
-            id="descripcion"
-            [(ngModel)]="model.descripcion"
-            name="descripcion"
-            class="form-control"
-            pInputTextarea
-          >
-          </textarea>
-          <p-button type="submit" class="btn btn-dark my-3">Procesar</p-button>
-        </form>
-        <p class="alert alert-info">{{ mensaje }}</p>
-      </div>
-      <div class="col-12 col-md-6 table-responsive">
-        <p-table [value]="productos" [tableStyle]="{'min-width': '60rem'}">
-          <ng-template pTemplate="caption">
-            <div class="flex items-center justify-between">
-              Products
-              <p-button icon="pi pi-refresh"/>
-            </div>
-          </ng-template>
-          <ng-template pTemplate="header">
-            <tr>
-              <th>Id</th>
-              <th>Nombre</th>
-              <th>Descripción</th>
-              <th>Precio</th>
-              <th colspan="2">Acciones</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-product>
-            <tr>
-              <td>{{ product.codPro }}</td>
-              <td>{{ product.nombre }}</td>
-              <td><img [src]="product.imagen" [alt]="product.nombre" width="100" class="shadow-4"/></td>
-              <td>{{ product.precio | currency:'USD' }}</td>
-              <td>{{ product.category }}</td>
-              <td>
-                <p-button type="button" severity="warning" (click)="getProducto(product.codPro)">Editar</p-button>
-              </td>
-              <td>
-                <p-button type="button" severity="danger" (click)="delProducto(product.codPro)">Borrar</p-button>
-              </td>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="summary">
-            <div class="flex align-items-center justify-content-between">
-              En total hay {{ productos ? productos.length : 0 }} productos.
-            </div>
-          </ng-template>
-        </p-table>
-      </div>
+<p-menubar [model]="items" styleClass="px-4">
+  <ng-template pTemplate="start">
+    <h1 class="text-xl font-bold text-[var(--primary-color)]">Admin</h1>
+  </ng-template>
+  <ng-template pTemplate="item" let-item let-root="root">
+    <a class="flex align-items-center p-menuitem-link">
+      <span [class]="item.icon"></span>
+      <span class="ml-2">{{ item.label }}</span>
+      <p-badge *ngIf="item.badge" [ngClass]="{ 'ml-auto': !root, 'ml-2': root }" [value]="item.badge"/>
+      <span *ngIf="item.shortcut"
+            class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{{ item.shortcut }}</span>
+      <i *ngIf="item.items" [ngClass]="['pi', root ? 'pi-angle-down ml-2' : 'pi-angle-right ml-auto']"></i>
+    </a>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <div class="flex align-items-center gap-2">
+      <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle"/>
     </div>
-  </div>
+  </ng-template>
+</p-menubar>
+
+<div class="w-[min(calc(100%-2rem),72rem)] mx-auto pt-16">
+  <p-toast />
+  <p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+      <p-button
+        severity="success"
+        label="Nuevo"
+        icon="pi pi-plus"
+        class="mr-2"
+        (onClick)="openNew()"
+      />
+      <p-button
+        severity="danger"
+        label="Eliminar"
+        icon="pi pi-trash"
+        (click)="deleteSelectedProducts()"
+        [disabled]="!selectedProducts || !selectedProducts.length"
+      />
+    </ng-template>
+    <!--    (click)="deleteSelectedProducts()"-->
+    <!--    [disabled]="!selectedProducts || !selectedProducts.length" />-->
+
+    <ng-template pTemplate="right">
+      <p-button
+        severity="help"
+        label="Exportar"
+        icon="pi pi-upload"
+      />
+    </ng-template>
+  </p-toolbar>
+  <p-table
+    #dt
+    [value]="productos"
+    [tableStyle]="{'min-width': '64rem'}"
+    [globalFilterFields]="['nombre']"
+    [(selection)]="selectedProducts"
+    styleClass="p-datatable-gridlines text-sm"
+    [rowHover]="true"
+    dataKey="codPro"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex items-center justify-between">
+        <h2 class="m-0">Mantenimiento de productos</h2>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Buscar..."
+            class="w-full text-sm leading-none"
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 4rem">
+          <p-tableHeaderCheckbox />
+        </th>
+        <th>Id</th>
+        <th
+          pSortableColumn="nombre"
+        >
+          Nombre
+          <p-sortIcon field="nombre"/>
+        </th>
+        <th>Descripción</th>
+        <th>Imagen</th>
+        <th pSortableColumn="precio" class="w-1/6">
+          Precio
+          <p-sortIcon field="precio"/>
+        </th>
+        <th>Stock</th>
+        <th>Categoría</th>
+        <th colspan="2">Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="product" />
+        </td>
+        <td>{{ product.codPro }}</td>
+        <td>{{ product.nombre }}</td>
+        <td>{{ product.descripcion }}</td>
+        <td>
+          <img
+            [src]="'/assets/images/' + product.imagen"
+            [alt]="product.nombre"
+            width="80"
+            class="shadow-md"
+          />
+        </td>
+        <td>{{ product.precio | currency:'USD' }}</td>
+        <td>{{ product.cantidad }}</td>
+        <td>{{ product.categoria }}</td>
+        <td>
+          <div class="flex gap-2">
+            <p-button
+              icon="pi pi-pencil"
+              class="mr-2"
+              [rounded]="true"
+              [outlined]="true"
+              severity="success"
+              (click)="editProduct(product)"
+            />
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              [rounded]="true"
+              [outlined]="true"
+              (click)="deleteProduct(product)"
+            />
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        En total hay {{ productos ? productos.length : 0 }} productos.
+      </div>
+    </ng-template>
+  </p-table>
+  <p-dialog
+    [(visible)]="productDialog"
+    [style]="{ width: '450px' }"
+    header="Product Details"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      @if (productToEdit.imagen) {
+        <img
+          [src]="'/assets/images/' + productToEdit.imagen"
+          [alt]="productToEdit.imagen"
+          class="m-auto pb-3"
+        />
+      }
+      <input type="hidden" [(ngModel)]="productToEdit.codPro" >
+      <div class="field">
+        <label for="nombre">Nombre</label>
+        <input
+          type="text"
+          pInputText
+          id="nombre"
+          required
+          [(ngModel)]="productToEdit.nombre"
+          autofocus
+        />
+<!--        <small class="p-error" *ngIf="submitted && !product.name">-->
+<!--          Name is required.-->
+<!--        </small>-->
+      </div>
+      <div class="field">
+        <label for="description">Descripción</label>
+        <textarea
+          id="description"
+          pInputTextarea
+          required
+          [(ngModel)]="productToEdit.descripcion"
+        >
+        </textarea>
+      </div>
+      <div class="field">
+        <label for="imagen">Imagen</label>
+        <input
+          id="imagen"
+          pInputText
+          required
+          [(ngModel)]="productToEdit.imagen"
+        />
+      </div>
+      <div class="field">
+        <label class="mb-3" for="categoria">Categoría</label>
+        <input
+          type="text"
+          pInputText
+          id="categoria"
+          required
+          autofocus
+          [(ngModel)]="productToEdit.categoria"
+        />
+      </div>
+      <div class="formgrid grid">
+        <div class="field col">
+          <label for="price">Precio</label>
+          <p-inputNumber
+            id="price"
+            min="0"
+            mode="currency"
+            currency="USD"
+            locale="en-US"
+            [(ngModel)]="productToEdit.precio"
+            [showButtons]="true"
+          />
+        </div>
+        <div class="field col">
+          <label for="quantity">Cantidad</label>
+          <input
+            id="quantity"
+            pInputText
+            [(ngModel)]="productToEdit.cantidad"
+          />
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <p-button
+        label="Cancel"
+        icon="pi pi-times"
+        [text]="true"
+      />
+<!--      (click)="hideDialog()"-->
+      <p-button
+        label="Save"
+        icon="pi pi-check"
+        [text]="true"
+        (onClick)="addProduct(productToEdit)"
+      />
+<!--      (click)="saveProduct()"-->
+    </ng-template>
+  </p-dialog>
+  <p-confirmDialog [style]="{ width: '450px' }" />
 </div>

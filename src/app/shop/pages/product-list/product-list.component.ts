@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import type { SelectItem } from 'primeng/api';
 import { DataViewModule } from 'primeng/dataview';
@@ -7,8 +7,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { productsTemp } from '../../../data/products-temp';
 import type { Product } from '../../../models/product.interface';
+import { ProductService } from '../../../service/product.service';
 import { ProductCardComponent } from '../../components/product-card/product-card.component';
 
 @Component({
@@ -28,8 +28,9 @@ import { ProductCardComponent } from '../../components/product-card/product-card
   styleUrl: './product-list.component.css',
 })
 export class ProductListComponent {
+  private readonly productsService = inject(ProductService);
   items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  products: Product[] = productsTemp;
+  products: Product[] = this.productsService.products();
   sortOptions!: SelectItem[];
   sortOrder!: number;
   sortField!: string;
