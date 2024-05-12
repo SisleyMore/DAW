@@ -30,12 +30,16 @@ import { ProductCardComponent } from '../../components/product-card/product-card
 export class ProductListComponent {
   private readonly productsService = inject(ProductService);
   items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  products: Product[] = this.productsService.products();
+  products!: Product[];
   sortOptions!: SelectItem[];
   sortOrder!: number;
   sortField!: string;
 
   ngOnInit(): void {
+    this.productsService.getProducts().subscribe((data) => {
+      this.products = data;
+    });
+
     this.sortOptions = [
       { label: 'Del más caro al más barato', value: '!precio' },
       { label: 'Del más barato al más caro', value: 'precio' },
