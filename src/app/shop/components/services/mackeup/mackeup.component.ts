@@ -80,13 +80,17 @@ export class MackeupComponent {
   ];
 
   agregar = () => {
- 
-    this.shopService.postService(this.model).subscribe((resp: any) => {
-
-    
-        this.router.navigate(['/app/home']);
-        console.log('exito');
-      
+    if (this.appointmentForm.valid){
+      this.shopService.postService(this.model).subscribe((resp: any) => {
+      console.log('Valor seleccionado:', this.selectedServices.value);
+      this.router.navigate(['/app/home']);
+      console.log('exito');
     });
+    }else{
+      console.log('El formulario no es válido.');
+      console.log('Valor seleccionado:', this.selectedServices.value);
+
+    }
+    
   };
 }

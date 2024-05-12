@@ -16,6 +16,7 @@
           [(ngModel)]="model.nombreServicio"
           placeholder="Selecciona un servicio"
           styleClass="min-w-full"
+
         />
       </div>
     </p-fieldset>
@@ -95,8 +96,9 @@
             <label class="font-semibold">Hora</label>
             <input
               type="text"
-              id="hora_cita"
-              name="hora_cita"
+              id="time"
+              name="time"
+              formControlName="time"
               [(ngModel)]="model.hora_cita"
               pInputText
             />
@@ -124,7 +126,7 @@
                   formControlName="location"
                   name="location"
                   value="2"
-                  [ngModel]="model.lugar"
+                  [(ngModel)]="model.lugar"
                   id="domicilio"
                   (change)="toggleInputs($event)"
                 />
@@ -138,22 +140,23 @@
             <label class="font-semibold">Dirección</label>
             <input
               type="text"
-              name="direccion"
+              name="address"
+              formControlName="address"
               [(ngModel)]="model.direccion"
               pInputText
-              [disabled]="selectedLocation === '1'"
-             
-            >
+              [disabled]="selectedLocation === '1'"    
+            />
           </div>
           <div class="form-group">
             <label class="font-semibold">Referencia</label>
             <input
               type="text"
-              name="referencia"
+              name="reference"
+              formControlName="reference"
               [(ngModel)]="model.referencia"
               pInputText
               [disabled]="selectedLocation === '1'"
-            >
+            />
           </div>
         </div>
       </p-fieldset>
