@@ -11,6 +11,9 @@
         <p-dropdown
           [options]="services"
           optionLabel="name"
+          name="selectedServices"
+          optionValue="value"
+          [(ngModel)]="model.nombreServicio"
           placeholder="Selecciona un servicio"
           styleClass="min-w-full"
         />
@@ -29,6 +32,7 @@
               formControlName="firstName"
               id="firstName"
               name="firstName"
+              [(ngModel)]="model.nombrePersona"
               pInputText
             />
           </div>
@@ -39,6 +43,7 @@
               formControlName="phone"
               id="phone"
               name="phone"
+              [(ngModel)]="model.numero"
               pInputText
             />
           </div>
@@ -49,6 +54,7 @@
               formControlName="email"
               id="email"
               name="email"
+              [(ngModel)]="model.email"
               pInputText
             />
           </div>
@@ -58,6 +64,7 @@
               id="descripcion"
               formControlName="description"
               name="descripcion"
+              [(ngModel)]="model.descripcion"
               pInputTextarea
               rows="5"
               [autoResize]="true"
@@ -76,6 +83,7 @@
             <p-calendar
               type="date"
               formControlName="appointmentDate"
+              [(ngModel)]="model.fecha_cita"
               inputId="appointmentDate"
               name="appointmentDate"
               styleClass="w-full"
@@ -89,6 +97,7 @@
               type="text"
               id="hora_cita"
               name="hora_cita"
+              [(ngModel)]="model.hora_cita"
               pInputText
             />
           </div>
@@ -101,6 +110,7 @@
                   formControlName="location"
                   name="location"
                   value="1"
+                  [(ngModel)]="model.lugar"
                   id="tienda"
                   (change)="toggleInputs($event)"
                 />
@@ -114,6 +124,7 @@
                   formControlName="location"
                   name="location"
                   value="2"
+                  [ngModel]="model.lugar"
                   id="domicilio"
                   (change)="toggleInputs($event)"
                 />
@@ -128,6 +139,7 @@
             <input
               type="text"
               name="direccion"
+              [(ngModel)]="model.direccion"
               pInputText
               [disabled]="selectedLocation === '1'"
              
@@ -138,6 +150,7 @@
             <input
               type="text"
               name="referencia"
+              [(ngModel)]="model.referencia"
               pInputText
               [disabled]="selectedLocation === '1'"
             >

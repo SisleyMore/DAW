@@ -9,7 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { FormControl } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { Button, ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
@@ -36,6 +36,7 @@ import { ServicesService } from '../../../../service/services.service';
     FieldsetModule,
     CalendarModule,
     InputTextareaModule,
+    RouterModule
   ],
   templateUrl: './mackeup.component.html',
   styleUrl: './mackeup.component.css',
@@ -46,9 +47,10 @@ export class MackeupComponent {
 
   mensaje = '';
   model = new ClassService();
-  router = Router;
   selectedLocation = '1';
 
+  constructor(private router:Router) {
+  }
   protected readonly appointmentForm = this.formBuilder.group({
     personalInformation: this.formBuilder.group({
       firstName: ['', Validators.required],
@@ -72,14 +74,19 @@ export class MackeupComponent {
 
   selectedServices: FormControl = new FormControl();
   services = [
-    { name: 'Manicura', value: 1 },
-    { name: 'Maquillaje', value: 2 },
-    { name: 'Asesoramiento', value: 3 },
+    { name: 'Manicura', value: 'Manicura'},
+    { name: 'Maquillaje', value: 'Maquillaje' },
+    { name: 'Asesoramiento', value: 'Asesoramiento' },
   ];
 
   agregar = () => {
+ 
     this.shopService.postService(this.model).subscribe((resp: any) => {
-      console.log('exito');
+
+    
+        this.router.navigate(['/app/home']);
+        console.log('exito');
+      
     });
   };
 }
