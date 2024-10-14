@@ -3,17 +3,17 @@
   <form
     [formGroup]="appointmentForm"
     class="grid w-[min(calc(100%-2rem),52rem)] mx-auto space-y-4 text-sm"
-    (ngSubmit)="agregar()"
+    
   >
     <p-fieldset legend="Tipo de servicio">
       <div class="form-group | grid">
         <label class="font-semibold">Servicio</label>
         <p-dropdown
           [options]="services"
-          optionLabel="name"
-          name="selectedServices"
+          optionLabel="nombreServicio"
+          name="servicio"
           optionValue="value"
-          [(ngModel)]="model.nombreServicio"
+          formControlName="servicio"          
           placeholder="Selecciona un servicio"
           styleClass="min-w-full"
 
@@ -30,10 +30,9 @@
             <label class="font-semibold" for="firstName">Nombre</label>
             <input
               type="text"
-              formControlName="firstName"
               id="firstName"
               name="firstName"
-              [(ngModel)]="model.nombrePersona"
+              formControlName="firstName"
               pInputText
             />
           </div>
@@ -41,10 +40,9 @@
             <label class="font-bold" for="phone">Celular</label>
             <input
               type="text"
-              formControlName="phone"
               id="phone"
               name="phone"
-              [(ngModel)]="model.numero"
+              formControlName="phone"
               pInputText
             />
           </div>
@@ -52,10 +50,9 @@
             <label class="font-bold">Correo</label>
             <input
               type="text"
-              formControlName="email"
               id="email"
               name="email"
-              [(ngModel)]="model.email"
+              formControlName="email"
               pInputText
             />
           </div>
@@ -65,7 +62,6 @@
               id="descripcion"
               formControlName="description"
               name="descripcion"
-              [(ngModel)]="model.descripcion"
               pInputTextarea
               rows="5"
               [autoResize]="true"
@@ -84,7 +80,6 @@
             <p-calendar
               type="date"
               formControlName="appointmentDate"
-              [(ngModel)]="model.fecha_cita"
               inputId="appointmentDate"
               name="appointmentDate"
               styleClass="w-full"
@@ -93,69 +88,29 @@
             />
           </div>
           <div class="form-group | grid">
-            <label class="font-semibold">Hora</label>
-            <input
-              type="text"
-              id="time"
-              name="time"
-              formControlName="time"
-              [(ngModel)]="model.hora_cita"
-              pInputText
+            <label class="font-semibold">Turno</label>
+            <p-dropdown
+            [options]="turnos"
+            optionLabel="turno"
+            name="turno"
+            formControlName="turno"          
+            optionValue="codTurno"
+            placeholder="Selecciona un turno"
+            styleClass="min-w-full"
+  
             />
           </div>
           <div class="form-group pb-4">
             <label class="font-semibold">Lugar</label>
-            <div class="flex flex-wrap gap-4">
-              <div class="flex items-center">
-                <input
-                  type="radio"
-                  formControlName="location"
-                  name="location"
-                  value="1"
-                  [(ngModel)]="model.lugar"
-                  id="tienda"
-                  (change)="toggleInputs($event)"
-                />
-                <label for="tienda" class="ml-2">
-                  Tienda
-                </label>
-              </div>
-              <div class="flex items-center">
-                <input
-                  type="radio"
-                  formControlName="location"
-                  name="location"
-                  value="2"
-                  [(ngModel)]="model.lugar"
-                  id="domicilio"
-                  (change)="toggleInputs($event)"
-                />
-                <label for="domicilio" class="ml-2">
-                  Domicilio + S/10
-                </label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="font-semibold">Dirección</label>
-            <input
-              type="text"
-              name="address"
-              formControlName="address"
-              [(ngModel)]="model.direccion"
-              pInputText
-              [disabled]="selectedLocation === '1'"    
-            />
-          </div>
-          <div class="form-group">
-            <label class="font-semibold">Referencia</label>
-            <input
-              type="text"
-              name="reference"
-              formControlName="reference"
-              [(ngModel)]="model.referencia"
-              pInputText
-              [disabled]="selectedLocation === '1'"
+            <p-dropdown
+            [options]="sedes"
+            optionLabel="distrito"
+            name="sede"
+            formControlName="sede"          
+            optionValue="idSede"
+            placeholder="Selecciona una sede"
+            styleClass="min-w-full"
+  
             />
           </div>
         </div>

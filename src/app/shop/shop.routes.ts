@@ -4,11 +4,8 @@ import {HomeComponent} from "./components/home/home.component";
 import {AboutComponent} from "./components/about/about.component";
 import {ProductDetailComponent} from "./pages/product-detail/product-detail.component";
 import {ProductListComponent} from "./pages/product-list/product-list.component";
-import { ManicureComponent } from "./components/services/manicure/manicure.component";
-import { FormServiceComponent } from "./components/services/form-service/form-service.component";
 import { MackeupComponent } from "./components/services/mackeup/mackeup.component";
 import { ProductsComponent } from "./components/products/products.component";
-import { AdvicesComponent } from "./components/services/advices/advices.component";
 
 export const SHOP_ROUTES: Routes = [
   {
@@ -32,20 +29,8 @@ export const SHOP_ROUTES: Routes = [
         component: ProductDetailComponent
       },
       {
-        path: 'manicure',
-        component: ManicureComponent
-      },
-      {
         path: 'mackeup',
         component: MackeupComponent
-      },
-      {
-        path: 'advices',
-        component: AdvicesComponent
-      },
-      {
-        path: 'form-service',
-        component: FormServiceComponent
       },
       {
         path: 'add-product',

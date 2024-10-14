@@ -18,7 +18,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { filter } from 'rxjs';
-import { ClassService } from '../../../../models/serviceClass';
+import { ClassCita, ClassSede, ClassServicio, ClassTurno } from '../../../../models/citaClass';
 import { ServicesService } from '../../../../service/services.service';
 
 @Component({
@@ -46,12 +46,16 @@ export class MackeupComponent {
   private readonly formBuilder = inject(FormBuilder);
 
   mensaje = '';
-  model = new ClassService();
+  model = new ClassCita();
+  services: ClassServicio[] = [];
+  turnos: ClassTurno[] = [];
+  sedes: ClassSede[] = [];
   selectedLocation = '1';
 
   constructor(private router:Router) {
   }
   protected readonly appointmentForm = this.formBuilder.group({
+    servicio: ['', Validators.required], 
     personalInformation: this.formBuilder.group({
       firstName: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
@@ -60,28 +64,47 @@ export class MackeupComponent {
     }),
     appointmentInformation: this.formBuilder.group({
       appointmentDate: ['', Validators.required],
-      time: ['', Validators.required],
-      location: ['1', Validators.required],
-      address: [''],
-      reference: [''],
+      turno: ['', Validators.required],
+      sede: ['', Validators.required]
     }),
   });
 
-  toggleInputs(event: any) {
-    this.selectedLocation = event.target.value;
-    console.log(this.selectedLocation);
+  ngOnInit() {
+    this.shopService.getServicios().subscribe(
+      (data) => {
+        this.services = data;
+      },
+      (error) => {
+        console.error('Error al cargar los servicios:', error);
+      }
+    );
+
+    this.shopService.getTurnos().subscribe(
+      (turnos: ClassTurno[]) => {
+        this.turnos = turnos;
+      },
+      (error) => {
+        console.error('Error al cargar los turnos:', error);
+      }
+    );
+
+    this.shopService.getSedes().subscribe(
+      (sedes: ClassSede[]) => {
+        this.sedes = sedes;
+        console.log('Sedes cargadas:', this.sedes);
+      },
+      (error) => {
+        console.error('Error al cargar las sedes:', error);
+      }
+    );
   }
 
-  selectedServices: FormControl = new FormControl();
-  services = [
-    { name: 'Manicura', value: 'Manicura'},
-    { name: 'Maquillaje', value: 'Maquillaje' },
-    { name: 'Asesoramiento', value: 'Asesoramiento' },
-  ];
-
+/*
   agregar = () => {
     if (this.appointmentForm.valid){
-      this.shopService.postService(this.model).subscribe((resp: any) => {
+      this.shopService.postService(this.services).subscribe((resp: any) => {
+      this.model.servicio.nombreServicio = this.selectedServices.value;
+      this.model.turno.turno = this.selectedTurnos.value;
       console.log('Valor seleccionado:', this.selectedServices.value);
       this.router.navigate(['/app/home']);
       console.log('exito');
@@ -92,5 +115,5 @@ export class MackeupComponent {
 
     }
     
-  };
+  };*/
 }
