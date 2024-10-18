@@ -1,4 +1,5 @@
 import type { Routes } from "@angular/router";
+import {LoginComponent} from "./components/auth/login/login.component";
 import {ShopLayoutComponent} from "./components/layout/shop-layout/shop-layout.component";
 import {HomeComponent} from "./components/home/home.component";
 import {AboutComponent} from "./components/about/about.component";
@@ -8,6 +9,11 @@ import { MackeupComponent } from "./components/services/mackeup/mackeup.componen
 import { ProductsComponent } from "./components/products/products.component";
 
 export const SHOP_ROUTES: Routes = [
+ 
+  {
+    path: 'login',
+    component: LoginComponent
+  },
   {
     path: '',
     component: ShopLayoutComponent,
