@@ -2,12 +2,12 @@ export interface Cita {
     codCita : number;
     servicio: Servicio;
     nombrePersona : string;
-    numero : string;
+    numeroTel : string;
     email : string;
     descripcion : string;
-    fecha_cita : Date;
+    fechaCita : Date;
     turno : Turno;
-    estado : true;
+    estado : boolean;
     sede : Sede;
 }
 

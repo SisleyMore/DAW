@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
@@ -38,12 +38,14 @@ import { ServicesService } from '../../../../service/services.service';
     InputTextareaModule,
     RouterModule
   ],
+  providers: [DatePipe],
   templateUrl: './mackeup.component.html',
   styleUrl: './mackeup.component.css',
 })
 export class MackeupComponent {
   private readonly shopService = inject(ServicesService);
   private readonly formBuilder = inject(FormBuilder);
+  private datePipe = inject(DatePipe);
 
   mensaje = '';
   model = new ClassCita();
@@ -55,7 +57,7 @@ export class MackeupComponent {
   constructor(private router:Router) {
   }
   protected readonly appointmentForm = this.formBuilder.group({
-    servicio: ['', Validators.required], 
+    servicio: [0, Validators.required], 
     personalInformation: this.formBuilder.group({
       firstName: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
@@ -63,9 +65,9 @@ export class MackeupComponent {
       description: ['', Validators.required],
     }),
     appointmentInformation: this.formBuilder.group({
-      appointmentDate: ['', Validators.required],
-      turno: ['', Validators.required],
-      sede: ['', Validators.required]
+      appointmentDate: [, Validators.required],
+      turno: [0, Validators.required],
+      sede: [0, Validators.required]
     }),
   });
 
@@ -82,6 +84,8 @@ export class MackeupComponent {
     this.shopService.getTurnos().subscribe(
       (turnos: ClassTurno[]) => {
         this.turnos = turnos;
+        console.log('Turnos cargadas:', this.turnos);
+
       },
       (error) => {
         console.error('Error al cargar los turnos:', error);
@@ -99,21 +103,42 @@ export class MackeupComponent {
     );
   }
 
-/*
-  agregar = () => {
-    if (this.appointmentForm.valid){
-      this.shopService.postService(this.services).subscribe((resp: any) => {
-      this.model.servicio.nombreServicio = this.selectedServices.value;
-      this.model.turno.turno = this.selectedTurnos.value;
-      console.log('Valor seleccionado:', this.selectedServices.value);
-      this.router.navigate(['/app/home']);
-      console.log('exito');
-    });
-    }else{
-      console.log('El formulario no es válido.');
-      console.log('Valor seleccionado:', this.selectedServices.value);
 
-    }
+  agregar = () => {
+    if (this.appointmentForm.valid) {
+      this.model.servicio.codServicio = this.appointmentForm.value.servicio!;
+      this.model.turno.idTurno = this.appointmentForm.value.appointmentInformation?.turno!;
+      this.model.sede.idSede = this.appointmentForm.value.appointmentInformation?.sede!;
+      
+      const personalInfo = this.appointmentForm.value.personalInformation!;
+      this.model.nombrePersona = personalInfo.firstName!;
+      this.model.numeroTel = personalInfo.phone!;
+      this.model.email = personalInfo.email!;
+      this.model.descripcion = personalInfo.description!;
+      
+      const appointmentInfo = this.appointmentForm.value.appointmentInformation!;
+
+      this.model.estado = true;
     
-  };*/
+      if (appointmentInfo.appointmentDate) {
+        const dateValue: Date = new Date(appointmentInfo.appointmentDate);
+        this.model.fechaCita = dateValue;
+      } else {
+        console.error('Error: appointmentDate es nulo o indefinido.');
+        return;
+      }
+
+      this.shopService.postCita(this.model).subscribe(
+        (resp: any) => {
+          console.log('Cita registrada exitosamente', resp);
+          this.router.navigate(['/app/home']);
+        },
+        (error) => {
+          console.error('Error al registrar la cita:', error);
+        }
+      );
+    } else {
+      console.log('El formulario no es válido.');
+    }
+  };
 }

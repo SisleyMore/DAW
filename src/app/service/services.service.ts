@@ -7,19 +7,20 @@ import {map} from 'rxjs';
   providedIn: 'root'
 })
 export class ServicesService {
-  url = "http://localhost:8080/servicios";
-  url_t = "http://localhost:8080/servicios/turnos"
-  url_s = "http://localhost:8080/servicios/sedes"
+  url_ss = "http://localhost:8080/citas/servicios";
+  url_t = "http://localhost:8080/citas/turnos";
+  url_s = "http://localhost:8080/citas/sedes";
+  url_post_cita = "http://localhost:8080/citas";
 
   constructor(private http:HttpClient) { }
 
   getServicios(){
     let header = new HttpHeaders().set('Type-content', 'application/json');
-    return this.http.get<Servicio[]>(this.url,{headers: header});
+    return this.http.get<Servicio[]>(this.url_ss,{headers: header});
   }
 
-  postService = (data:Servicio) => {
-    return this.http.post<Servicio>(this.url, data)
+  postCita = (data:Cita) => {
+    return this.http.post<Cita>(this.url_post_cita, data)
     .pipe(map((svc)=>data));
   }
 

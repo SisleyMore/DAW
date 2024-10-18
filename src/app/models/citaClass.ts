@@ -2,10 +2,10 @@ export class ClassCita {
     codCita: number = 0;
     servicio: ClassServicio = new ClassServicio();
     nombrePersona: string = "";
-    numero: string = "";
+    numeroTel: string = "";
     email: string = "";
     descripcion: string = "";
-    fecha_cita: Date = new Date();
+    fechaCita: Date = new Date();
     turno: ClassTurno = new ClassTurno();
     estado: boolean = true;
     sede: ClassSede = new ClassSede();
