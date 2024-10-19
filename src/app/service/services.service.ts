@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Cita, Sede, Servicio, Turno } from '../models/cita.interface';
-import {map} from 'rxjs';
+import {catchError, map, Observable, throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,16 @@ export class ServicesService {
   url_post_cita = "http://localhost:8080/citas";
 
   constructor(private http:HttpClient) { }
+
+  getCircuitBreaker(): Observable<Sede[]> {
+    let header = new HttpHeaders().set('Type-content', 'application/json');
+    return this.http.get<Sede[]>(this.url_s, { headers: header }).pipe(
+      catchError(error => {
+        console.error("Error fetching sedes", error); 
+        return throwError(() => new Error('Circuit breaker falló.'));
+      })
+    );
+  }
 
   getServicios(){
     let header = new HttpHeaders().set('Type-content', 'application/json');

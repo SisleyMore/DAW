@@ -52,7 +52,7 @@ export class MackeupComponent {
   services: ClassServicio[] = [];
   turnos: ClassTurno[] = [];
   sedes: ClassSede[] = [];
-  selectedLocation = '1';
+  errorMessage: string | null = null;
 
   constructor(private router:Router) {
   }
@@ -72,6 +72,18 @@ export class MackeupComponent {
   });
 
   ngOnInit() {
+
+    this.shopService.getCircuitBreaker().subscribe({
+      next: (data) => {
+        this.sedes = data;
+        this.errorMessage = null;  
+      },
+      error: (err) => {
+        this.errorMessage = 'Temporalmente no disponible';
+        console.error('Error en obtener servicios:', err);
+      }
+    });
+
     this.shopService.getServicios().subscribe(
       (data) => {
         this.services = data;
@@ -131,7 +143,7 @@ export class MackeupComponent {
       this.shopService.postCita(this.model).subscribe(
         (resp: any) => {
           console.log('Cita registrada exitosamente', resp);
-          this.router.navigate(['/app/home']);
+          this.router.navigate(['/app/confirmation'], { state: { data: this.model } });
         },
         (error) => {
           console.error('Error al registrar la cita:', error);

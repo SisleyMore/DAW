@@ -1,6 +1,11 @@
 <div class="grid pb-8">
-  <h2 class="text-center font-semibold text-2xl my-6 text-[var(--primary-color)]">Reserva tu cita aquí ~</h2>
-  <form
+
+  <div >
+    <h1 *ngIf="errorMessage" class=" m-6 text-2xl text-center text-[var(--primary-color)] font-bold">{{ errorMessage }}</h1>
+  </div>
+
+  <h2 *ngIf="!errorMessage" class="text-center font-semibold text-2xl my-6 text-[var(--primary-color)]">Reserva tu cita aquí ~</h2>
+  <form *ngIf="!errorMessage"
     [formGroup]="appointmentForm"
     class="grid w-[min(calc(100%-2rem),52rem)] mx-auto space-y-4 text-sm"
     (ngSubmit)="agregar()"
@@ -85,7 +90,7 @@
               styleClass="w-full"
               [showIcon]="true"
               [showOnFocus]="false"
-              dateFormat="mm/dd/yy"  
+              dateFormat="dd/mm/yy"  
             />
           </div>
           <div class="form-group | grid">
