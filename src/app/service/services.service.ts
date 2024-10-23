@@ -11,6 +11,7 @@ export class ServicesService {
   url_t = "http://localhost:8080/citas/turnos";
   url_s = "http://localhost:8080/citas/sedes";
   url_post_cita = "http://localhost:8080/citas";
+  url_get_citas = "http://localhost:8080/citas/list";
 
   constructor(private http:HttpClient) { }
 
@@ -32,6 +33,11 @@ export class ServicesService {
   postCita = (data:Cita) => {
     return this.http.post<Cita>(this.url_post_cita, data)
     .pipe(map((svc)=>data));
+  }
+
+  getCitas(){
+    let header = new HttpHeaders().set('Type-content', 'application/json');
+    return this.http.get<Cita[]>(this.url_get_citas,{headers: header});
   }
 
   getTurnos(){

@@ -1,4 +1,5 @@
 import { CurrencyPipe, NgClass, NgForOf, NgIf } from '@angular/common';
+import { SHOP_ROUTES } from '../../shop.routes';
 import {
   Component,
   DestroyRef,
@@ -75,12 +76,13 @@ export class ProductsComponent {
       {
         label: 'Inicio',
         icon: 'pi pi-home',
-        routerLink: '/app/home',
+        routerLink: '/admin',
       },
       {
-        label: 'Mensajes',
+        label: 'Citas',
         icon: 'pi pi-envelope',
         badge: '3',
+        routerLink: '/app/appointments'
       },
     ];
 

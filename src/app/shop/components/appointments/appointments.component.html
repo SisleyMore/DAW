@@ -1,0 +1,113 @@
+<p-menubar [model]="items" styleClass="px-4">
+    <ng-template pTemplate="start">
+      <h1 class="text-xl font-bold text-[var(--primary-color)]">Admin</h1>
+    </ng-template>
+    <ng-template pTemplate="item" let-item let-root="root">
+      <a class="flex align-items-center p-menuitem-link" [routerLink] = "item.routerLink">
+        <span [class]="item.icon"></span>
+        <span class="ml-2">{{ item.label }}</span>
+        <p-badge *ngIf="item.badge" [ngClass]="{ 'ml-auto': !root, 'ml-2': root }" [value]="item.badge"/>
+        <span *ngIf="item.shortcut"
+              class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{{ item.shortcut }}</span>
+        <i *ngIf="item.items" [ngClass]="['pi', root ? 'pi-angle-down ml-2' : 'pi-angle-right ml-auto']"></i>
+      </a>
+    </ng-template>
+    <ng-template pTemplate="end">
+      <div class="flex align-items-center gap-2">
+        <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle"/>
+      </div>
+    </ng-template>
+</p-menubar>
+  
+<div class="w-[min(calc(100%-2rem),72rem)] mx-auto pt-16">
+    <p-toast />
+    <div >
+        <h1 *ngIf="errorMessage" class=" m-6 text-2xl text-center text-[var(--primary-color)] font-bold">{{ errorMessage }}</h1>
+    </div>
+    <p-table *ngIf="!errorMessage" 
+      #dt
+      [value]="citas"
+      [tableStyle]="{'min-width': '64rem'}"
+      [globalFilterFields]="['nombrePersona']"
+      styleClass="p-datatable-gridlines text-sm"
+      [sortMode]="'multiple'"
+      [rowHover]="true"
+      dataKey="codCita"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex items-center justify-between">
+          <h2 class="m-0 text-xl font-bold text-[var(--primary-color)]">Citas reservadas</h2>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+              placeholder="Buscar..."
+              class="w-full text-sm leading-none"
+            />
+          </span>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          
+          <th>Id</th>
+          <th>Nombre
+            
+          </th>
+          <th>Celular</th>
+          <th pSortableColumn ="sede.distrito">Sede <p-sortIcon field="sede.distrito"/></th>
+          <th pSortableColumn="turno.turno" class="w-1/6">
+            Turno
+            <p-sortIcon field="turno.turno"/>
+          </th>
+          <th  pSortableColumn="fechaCita">
+            Fecha 
+            <p-sortIcon field="fechaCita"/>
+        </th>
+          <th>Estado</th>
+          <th colspan="2">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-cita>
+        <tr>
+         
+          <td>{{ cita.codCita }}</td>
+          <td>{{ cita.nombrePersona }}</td>
+          <td>{{ cita.numeroTel }}</td>
+          <td>{{ cita.sede.distrito }}</td>
+          <td>{{ cita.turno.turno }}</td>
+          <td>{{ cita.fechaCita }}</td>
+          <td>{{ cita.estado }}</td>
+          <td>
+            <p-button
+                severity="success"
+                label="Ver"
+                class="mr-2"
+                (onClick)="openDescripcion(cita)"
+            />
+          </td>
+        </tr>
+      </ng-template>
+      
+
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          En total hay {{ citas ? citas.length : 0 }} citas.
+        </div>
+      </ng-template>
+    </p-table>
+    <p-dialog
+        [(visible)]="citasDialog"
+        [style]="{ width: '450px' }"
+        header="Descripción de la cita"
+        [modal]="true"
+        styleClass="p-fluid"
+      >
+      <ng-template pTemplate="content">
+        <p>{{ cita.descripcion }}</p>
+      </ng-template>
+      </p-dialog>
+  </div>
+  

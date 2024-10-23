@@ -7,12 +7,17 @@ import {ProductDetailComponent} from "./pages/product-detail/product-detail.comp
 import {ProductListComponent} from "./pages/product-list/product-list.component";
 import { MackeupComponent } from "./components/services/mackeup/mackeup.component";
 import { ProductsComponent } from "./components/products/products.component";
+import { AppointmentsComponent } from "./components/appointments/appointments.component";
 
 export const SHOP_ROUTES: Routes = [
  
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'appointments',
+    component: AppointmentsComponent
   },
   {
     path: '',
