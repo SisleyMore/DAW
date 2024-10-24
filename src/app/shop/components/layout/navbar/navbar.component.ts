@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
+
 import type { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
@@ -33,6 +34,7 @@ export class NavbarComponent {
     {
       label: 'Iniciar Sesión',
       icon: 'pi pi-fw pi-pencil',
+      routerLink: './login',
     },
     {
       label: 'Cerrar sesión',
@@ -67,5 +69,19 @@ export class NavbarComponent {
       icon: 'pi pi-envelope',
       routerLink: './about',
     },
-  ];
+  ];  
+  constructor(private router: Router) {} // Inyectar Router
+
+  userName: string | null = null;
+
+  ngOnInit() {
+    this.userName = localStorage.getItem('userName'); // Obtener el nombre del usuario desde localStorage
+  }
+
+  logout() {
+    localStorage.removeItem('token'); // Opcional: Eliminar el token al cerrar sesión
+    localStorage.removeItem('userName'); // Opcional: Eliminar el nombre del usuario al cerrar sesión
+    this.router.navigate(['/login']); // Redirigir a la vista de inicio de sesión
+  }
+
 }
