@@ -39,6 +39,10 @@ export class NavbarComponent {
     {
       label: 'Cerrar sesión',
       icon: 'pi pi-fw pi-power-off',
+      routerLink: './login',
+      command: () => this.logout(), 
+
+
     },
   ];
 
@@ -79,9 +83,11 @@ export class NavbarComponent {
   }
 
   logout() {
-    localStorage.removeItem('token'); // Opcional: Eliminar el token al cerrar sesión
-    localStorage.removeItem('userName'); // Opcional: Eliminar el nombre del usuario al cerrar sesión
-    this.router.navigate(['/login']); // Redirigir a la vista de inicio de sesión
+    console.log('Cerrando sesión...'); // Para verificar si se llama
+
+    // this.router.navigate(['/login']); 
+    localStorage.removeItem('token'); 
+    localStorage.removeItem('userName'); 
   }
 
 }
