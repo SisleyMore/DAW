@@ -8,6 +8,7 @@ import {ProductListComponent} from "./pages/product-list/product-list.component"
 import { MackeupComponent } from "./components/services/mackeup/mackeup.component";
 import { ProductsComponent } from "./components/products/products.component";
 import { AppointmentsComponent } from "./components/appointments/appointments.component";
+import { CheckoutComponent } from "./components/services/checkout/checkout.component";
 
 export const SHOP_ROUTES: Routes = [
  
@@ -42,6 +43,10 @@ export const SHOP_ROUTES: Routes = [
       {
         path: 'mackeup',
         component: MackeupComponent
+      },
+      {
+        path: 'checkout',
+        component: CheckoutComponent
       },
       {
         path: 'add-product',

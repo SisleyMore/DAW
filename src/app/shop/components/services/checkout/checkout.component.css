@@ -1,0 +1,128 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+  
+  h3 {
+    margin-bottom: 20px;
+    font-size: 1.4em;
+    color: #333;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+  }
+  
+  input[type="text"], input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0 20px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  input[type="checkbox"] {
+    margin-right: 10px;
+  }
+  
+  .btn {
+    background-color: #9d2fa7;
+    color: white;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+  }
+  
+  .btn:hover {
+    background-color: #a12471;
+  }
+  
+  .container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .col-75, .col-50 {
+    float: left;
+    width: 100%;
+    padding: 0 16px;
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -16px;
+  }
+  
+  .col-50 {
+    width: 50%;
+  }
+  
+  @media (max-width: 800px) {
+    .col-50 {
+      width: 100%;
+    }
+  }
+  
+  input[type="submit"] {
+    background-color: #7c156b;
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    cursor: pointer;
+    font-size: 1.2em;
+    border-radius: 5px;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #882177;
+  }
+  
+  /* Estilo adicional para mejorar la experiencia del usuario */
+  input:focus {
+    border-color: #a132a1;
+    outline: none;
+  }
+  
+  .fa {
+    margin-right: 8px;
+  }
+  /* Centrar el formulario */
+.col-75 {
+    float: none;
+    width: 75%;
+    margin: 0 auto; /* Esto centrará el formulario */
+  }
+  
+  /* Container: para ajustar el tamaño y apariencia */
+  .container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px; /* Limita el ancho máximo del formulario */
+    margin: 0 auto; /* Centrar el contenedor */
+  }
+  
+  /* Mantener el diseño responsivo */
+  @media (max-width: 800px) {
+    .col-50 {
+      width: 100%;
+    }
+  }
+  

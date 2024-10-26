@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-75">
+      <div class="container">
+        <form action="/action_page.php">
+            <div class="row">
+              <div class="col-50">
+                <h3>Dirección de Facturación</h3>
+                <label for="fname"><i class="fa fa-user"></i> Nombre Completo</label>
+                <input type="text" id="fname" name="firstname" placeholder="Juan Ramirez" required>
+                
+                <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                <input type="email" id="email" name="email" placeholder="ejemplo@gmail.com" required>
+                
+                <label for="adr"><i class="fa fa-address-card-o"></i> Dirección</label>
+                <input type="text" id="adr" name="address" placeholder="Calle Arequipa 321" required>
+                
+                <label for="city"><i class="fa fa-institution"></i> Ciudad</label>
+                <input type="text" id="city" name="city" placeholder="Lima" required>
+                
+                <div class="row">
+                  <div class="col-50">
+                    <label for="state">Región</label>
+                    <input type="text" id="state" name="state" placeholder="Lima" required>
+                  </div>
+                  <div class="col-50">
+                    <label for="zip">Código Postal</label>
+                    <input type="text" id="zip" name="zip" placeholder="15001" pattern="[0-9]{5}" required>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-50">
+                <h3>Pago</h3>
+                <label for="cname">Nombre en la Tarjeta</label>
+                <input type="text" id="cname" name="cardname" placeholder="Juan Ramirez" required>
+                
+                <label for="ccnum">Número de Tarjeta</label>
+                <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444" pattern="\d{4}-\d{4}-\d{4}-\d{4}" required>
+                
+                <div class="row">
+                  <div class="col-50">
+                    <label for="expyear">Fecha de expiración</label>
+                    <input type="text" id="expyear" name="expyear" placeholder="07/12" pattern="\d{2}/\d{2}" required>
+                  </div>
+                  <div class="col-50">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" name="cvv" placeholder="352" pattern="\d{3}" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <label>
+              <input type="checkbox" checked="checked" name="sameadr" required> Acepta los términos de servicio
+            </label>
+            <form (submit)="procesarPago($event)">
+              <input type="submit" value="Realizar el Pago" class="btn">
+            </form>
+          </form>
+          
+      </div>
+    </div>
+
+  </div>
+  
