@@ -114,8 +114,8 @@
           />
         </td>
         <td>{{ product.precio | currency:'USD' }}</td>
-        <td>{{ product.cantidad }}</td>
-        <td>{{ product.categoria }}</td>
+        <td>{{ product.stock }}</td>
+        <td>{{ product.categoriaProducto.nombreCategoria }}</td>
         <td>
           <div class="flex gap-2">
             <p-button
@@ -194,13 +194,15 @@
       </div>
       <div class="field">
         <label class="mb-3" for="categoria">Categoría</label>
-        <input
-          type="text"
-          pInputText
-          id="categoria"
+        <p-dropdown
+          [options]="categorias"
+          optionLabel="nombreCategoria"
+          [(ngModel)] = "productToEdit.categoriaProducto.idCategoria"
+          optionValue="idCategoria"
           required
           autofocus
-          [(ngModel)]="productToEdit.categoria"
+          styleClass="min-w-full"
+
         />
       </div>
       <div class="formgrid grid">
@@ -221,7 +223,7 @@
           <input
             id="quantity"
             pInputText
-            [(ngModel)]="productToEdit.cantidad"
+            [(ngModel)]="productToEdit.stock"
           />
         </div>
       </div>

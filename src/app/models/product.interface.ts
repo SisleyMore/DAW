@@ -3,7 +3,12 @@ export interface Product {
   nombre: string;
   descripcion: string;
   precio: number;
-  cantidad: string;
+  stock: number;
   imagen: string;
-  categoria: string;
+  categoriaProducto: Categoria;
+}
+
+export interface Categoria{
+  idCategoria: number;
+  nombreCategoria: string;
 }

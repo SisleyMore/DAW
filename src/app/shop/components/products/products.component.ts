@@ -17,6 +17,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -28,8 +29,8 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { concatAll, concatMap, from, mergeMap, of, switchAll } from 'rxjs';
-import { Product } from '../../../models/product.interface';
-import { Producto } from '../../../models/productClass';
+import { Categoria, Product } from '../../../models/product.interface';
+import { Producto, ClassCategoria } from '../../../models/productClass';
 import { ProductService } from '../../../service/product.service';
 
 @Component({
@@ -39,6 +40,7 @@ import { ProductService } from '../../../service/product.service';
     NgForOf,
     FormsModule,
     ButtonModule,
+    DropdownModule,
     CurrencyPipe,
     TableModule,
     InputTextModule,
@@ -69,6 +71,7 @@ export class ProductsComponent {
   selectedProducts!: Product[] | null;
   items: MenuItem[] | undefined;
   productos!: Product[];
+  categorias: ClassCategoria[] = [];
   destroyRef = inject(DestroyRef);
 
   ngOnInit() {
@@ -92,6 +95,17 @@ export class ProductsComponent {
       .subscribe((products) => {
         this.productos = products;
       });
+
+      this.productsService.getCategorias().subscribe(
+        (data) => {
+          this.categorias = data;
+          console.log('Turnos cargadas:', this.categorias);
+
+        },
+        (error) => {
+        console.error('Error al cargar las categorias:', error);
+        });
+        
   }
 
   mensaje = 'Modo inserción';
@@ -99,7 +113,16 @@ export class ProductsComponent {
   model = new Producto();
 
   public openNew(): void {
-    this.productToEdit = {} as Product;
+      this.productToEdit = {
+        codPro: 0,
+        nombre: '',
+        precio: 0,
+        imagen: '',
+        descripcion: '',
+        stock: 0,
+        categoriaProducto: { idCategoria: 0, nombreCategoria: '' } // Asegurarse de que `categoriaProducto` esté definido
+      
+    } as Product;
     this.productDialog.set(true);
   }
 
@@ -118,7 +141,7 @@ export class ProductsComponent {
 
   deleteProduct(product: Product) {
     this.confirmationService.confirm({
-      message: `¿Está segurod de eliminar ${product.nombre}?`,
+      message: `¿Está seguro de eliminar ${product.nombre}?`,
       header: 'Confirmación',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

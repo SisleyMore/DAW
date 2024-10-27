@@ -1,14 +1,15 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
-import { Product } from '../models/product.interface';
+import { Product, Categoria } from '../models/product.interface';
 import { Producto } from '../models/productClass';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
+  url_ss = "http://localhost:8080/productos/categorias";
   url = 'http://localhost:8080/productos';
 
   constructor(private http: HttpClient) {}
@@ -37,4 +38,10 @@ export class ProductService {
   delProductoById(id: number) {
     return this.http.delete<Product>(`${this.url}/${id}`);
   }
+
+  getCategorias(){
+    let header = new HttpHeaders().set('Type-content', 'application/json');
+    return this.http.get<Categoria[]>(this.url_ss,{headers: header});
+  }
+
 }

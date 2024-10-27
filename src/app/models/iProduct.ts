@@ -8,3 +8,8 @@ export interface IProducto {
     imagen: string,
     categoria: string
 }
+
+export interface ICategoria{
+    idCategoria: number;
+    nombreCategoria: string;
+}
