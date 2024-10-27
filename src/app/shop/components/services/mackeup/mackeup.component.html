@@ -91,6 +91,7 @@
               [showIcon]="true"
               [showOnFocus]="false"
               dateFormat="dd/mm/yy"  
+              [minDate]="minDate"
             />
           </div>
           <div class="form-group | grid">
@@ -128,4 +129,26 @@
       styleClass="w-full"
     />
   </form>
+
+  <p-dialog [(visible)]="showSuccessDialog" [modal]="true" header="Confirmación" [style]="{ width: '400px' }">
+    <ng-template pTemplate="content">
+      <p>¡Tu cita ha sido registrada exitosamente!</p>
+      <p><strong>Servicio:</strong> {{ citaServicio }}</p>
+    <p><strong>Acércate</strong> el {{ citaFecha }}</p>
+    <p><strong>Lugar:</strong> {{ citaSede?.distrito }} en <strong> {{citaSede?.direccion}}</strong></p>
+    <p><strong>Turno:</strong> {{ citaTurno?.turno }} en el horario de <strong> {{citaTurno?.horario}}</strong></p>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <p-button label="Aceptar" (click)="showSuccessDialog = false"></p-button>
+    </ng-template>
+  </p-dialog>
+  
+  <p-dialog [(visible)]="showErrorDialog" [modal]="true" header="Error" [style]="{ width: '400px' }">
+    <ng-template pTemplate="content">
+      <p>Ocurrió un error al registrar la cita. Máximo de cupos en este turno alcanzado. Intenta agendando tu cita en otro. Si el error persiste contactese con nosotros.</p>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <p-button label="Aceptar" (click)="showErrorDialog = false"></p-button>
+    </ng-template>
+  </p-dialog>
 </div>

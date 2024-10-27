@@ -1,6 +1,7 @@
 import { DatePipe, NgIf } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { DialogModule } from 'primeng/dialog';
 import {
   FormBuilder,
   FormGroup,
@@ -30,6 +31,7 @@ import { ServicesService } from '../../../../service/services.service';
     RadioButtonModule,
     InputTextModule,
     FormsModule,
+    DialogModule,
     NgIf,
     ButtonModule,
     RouterModule,
@@ -47,14 +49,24 @@ export class MackeupComponent {
   private readonly formBuilder = inject(FormBuilder);
   private datePipe = inject(DatePipe);
 
-  mensaje = '';
+
   model = new ClassCita();
   services: ClassServicio[] = [];
   turnos: ClassTurno[] = [];
   sedes: ClassSede[] = [];
   errorMessage: string | null = null;
 
+  showSuccessDialog: boolean = false;
+  showErrorDialog: boolean = false;
+
+  mensaje = '';
+  citaServicio: string = '';
+  citaFecha: string = '';
+  citaTurno: { turno: string, horario: string} | null = null;
+  citaSede: { distrito: string; direccion: string } | null = null;
+  minDate: Date;
   constructor(private router:Router) {
+    this.minDate = new Date();
   }
   protected readonly appointmentForm = this.formBuilder.group({
     servicio: [0, Validators.required], 
@@ -141,12 +153,22 @@ export class MackeupComponent {
       }
 
       this.shopService.postCita(this.model).subscribe(
+      
         (resp: any) => {
+          this.citaServicio = this.services.find(servicio => servicio.codServicio === this.appointmentForm.value.servicio)?.nombreServicio || '';
+          this.citaFecha = this.datePipe.transform(this.appointmentForm.get('appointmentInformation.appointmentDate')?.value, 'dd/MM/yyyy') || '';
+          this.citaTurno = this.turnos.find(turno => turno.idTurno === this.appointmentForm.get('appointmentInformation.turno')?.value) || null;
+          this.citaSede = this.sedes.find(sede => sede.idSede === this.appointmentForm.get('appointmentInformation.sede')?.value) || null;
+          
           console.log('Cita registrada exitosamente', resp);
-          this.router.navigate(['/app/confirmation'], { state: { data: this.model } });
+          this.showSuccessDialog = true;
+          setTimeout(() => {
+            this.router.navigate(['/app/home']); 
+          }, 2000);
         },
         (error) => {
           console.error('Error al registrar la cita:', error);
+          this.showErrorDialog = true; 
         }
       );
     } else {
