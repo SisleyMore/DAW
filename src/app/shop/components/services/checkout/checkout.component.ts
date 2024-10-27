@@ -20,26 +20,24 @@ export class CheckoutComponent {
   procesarPago(event: Event) {
     event.preventDefault(); 
 
-   
     const venta = {
       usuario: { idUsuario: 1 }, 
-      montoTotal: this.cartStore.total(),  
+      montoTotal: this.cartStore.total(),
       fechaRegistro: new Date(),
       detalleVentas: this.cartStore.cartItems().map(item => ({
-        idProducto: item.product.codPro,
+        producto: { codPro: item.product.codPro },  
         cantidad: item.quantity,
-        precio: item.product.precio
+        subtotal: item.product.precio * item.quantity
       })),
     };
+    
 
     this.ventaService.registrarVenta(venta).subscribe({
       next: (data) => {
         console.log('Venta registrada:', data);
         alert('Compra completada exitosamente');
         
-       
-        this.clearCart(); 
-
+        this.clearCart();  
         this.router.navigate(['/home']); 
       },
       error: (error) => {

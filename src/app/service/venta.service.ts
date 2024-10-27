@@ -6,12 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class VentaService {
+  private baseUrl = 'http://localhost:8080';
 
-  private apiUrl = 'http://localhost:8080/ventas';  
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   registrarVenta(venta: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, venta);
+    return this.http.post<any>(`${this.baseUrl}/ventas/registro`, venta);
   }
 }
